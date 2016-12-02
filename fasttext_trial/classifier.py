@@ -1,3 +1,5 @@
+#classifier
+
 import fasttext
 from cleaners import *
 from preprocess import *
