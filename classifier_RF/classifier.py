@@ -2,6 +2,8 @@ import numpy as np
 import pickle
 from helpers import load_data_and_labels
 from helpers import clean_str
+from sklearn.ensemble import RandomForestClassifier
+
 
 path = 'data/mini/'
 
@@ -30,6 +32,7 @@ for ls_in in ls:
         sum_vect += W[index]
     ls_sum.append(sum_vect)
 # print(ls_sum)
+X = ls_sum
 
 
 def test_sentence(sentence):
@@ -43,17 +46,14 @@ def test_sentence(sentence):
         sum_vect += W[index]
     return sum_vect
 
-
-test_sent = test_sentence("I am happy.")
-test_sent = np.reshape(test_sent, (1, -1))
-print(test_sent)
-
-X = ls_sum
-
-from sklearn.ensemble import RandomForestClassifier
-
+# Training the classifier
 rfc = RandomForestClassifier()
 rfc.fit(X, y)
+
+# Classification: Testing on new samples
+# TODO: Create embeddings for words in test data using word2vec
+
+# TODO: Predict labels of each tweet based on the avg vector of its words
 res = rfc.predict(test_sent)[0]
 if res == 1:
     res_text = 'positive'

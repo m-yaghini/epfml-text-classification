@@ -24,13 +24,12 @@ def main():
 
     epochs = 10
 
-    for epoch in range(epochs):
-        print("epoch {}".format(epoch))
-        for ix, jy, n in zip(cooc.row, cooc.col, cooc.data):
+    # for epoch in range(epochs):
+    #     print("epoch {}".format(epoch))
+    #     for ix, jy, n in zip(cooc.row, cooc.col, cooc.data):
 
-			# fill in your SGD code here, 
-			# for the update resulting from co-occurence (i,j)
-		
+    # fill in your SGD code here,
+    # for the update resulting from co-occurence (i,j)
 
     np.save('embeddings', xs)
 
