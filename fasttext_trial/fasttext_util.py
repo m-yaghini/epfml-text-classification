@@ -1,6 +1,7 @@
 from cleaners import clean_data
 import fasttext
 import os
+import numpy as np
 
 
 def extract_word_vectors(vector_filename):
@@ -16,6 +17,7 @@ def extract_word_vectors(vector_filename):
                 skipped = True
                 continue
             word, vec = line.split(sep=' ', maxsplit=1)
+            # vec = np.array([vec.split])
             vec_dict.__setitem__(word, vec)
             index_dict.__setitem__(word, index)
             index += 1
