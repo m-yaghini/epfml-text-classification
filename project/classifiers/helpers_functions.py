@@ -13,7 +13,7 @@ def load_data(run_path, ratio=0.001):
     return prepare_data_sets(run_path)
 
 def make_submission(run_path, results, file_name='submission'):
-    with open(run_path + 'outputs/' + str(file_name) + '.csv', 'w') as csvfile:
+    with open(run_path + str(file_name) + '.csv', 'w') as csvfile:
         fieldnames = ['Id', 'Prediction']
         sub_writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         index = 0

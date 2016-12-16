@@ -26,11 +26,12 @@ time_start = time.time()
 print('Starting Time : ' + str(time_start))
 
 param_grid = [{'C': [1.0], 'kernel': ['linear', 'rbf', 'sigmoid']}]
-clf_cv = GridSearchCV(estimator=svm.SVC(), param_grid=param_grid, cv=3, verbose=10)
+clf_cv = GridSearchCV(estimator=svm.SVC(), param_grid=param_grid, cv=2, verbose=10)
+clf_cv = svm.SVC(kernel='rbf')
 clf_cv.fit(X_train, labels)
 print("Cross-validation using RF done")
-print('Best Score : ' + str(clf_cv.best_score_))
-print('Best Parameters :' + str(clf_cv.best_params_))
+#print('Best Score : ' + str(clf_cv.best_score_))
+#print('Best Parameters :' + str(clf_cv.best_params_))
 
 all_results = []
 for test_sent in X_test:
