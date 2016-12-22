@@ -36,8 +36,8 @@ hidden_dims = 50
 nb_epoch = 2
 
 # '''
-max_features = 20000
-maxlen = 1000
+max_features = 1000
+maxlen = 200
 embedding_size = 100
 
 # Convolution

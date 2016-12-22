@@ -26,13 +26,14 @@ def prepare_submission(in_file, out_file):
             #     elif (line.find('__label__0')):
             #         out = str(index) + ',-1\n'
             #     outfile.write(out)
+            outfile.write('Id,Prediction\n')
             for (index, line) in enumerate(infile, start=1):
-                line.replace('__label__1',)
-
+                out = str(index) + (line.replace('__label__1',',1')).replace('__label__0',',-1')
+                outfile.write(out)
 
 # give_labels("data/train_pos_full.txt", "data/train_pos_full_labeled.txt", '1')
 # give_labels("data/train_neg_full.txt", "data/train_neg_full_labeled.txt", '0')
 
 # seperate('data/test_data.txt', 'data/test_data_.txt')
-
-prepare_submission('predict.txt', 'submission.csv')
+#
+prepare_submission('data/predict.txt', 'data/submission.csv')
