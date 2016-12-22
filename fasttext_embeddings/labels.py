@@ -7,5 +7,5 @@ def give_labels(in_file, out_file, label):
                 outfile.write('___label___' + label + ' ' + line)
 
 
-give_labels("data/train_pos.txt", "data/train_pos_labeled.txt", 'positive')
-give_labels("data/train_neg.txt", "data/train_neg_labeled.txt", 'negative')
+give_labels("data/train_pos_full.txt", "data/train_pos_full_labeled.txt", 'positive')
+give_labels("data/train_neg_full.txt", "data/train_neg_full_labeled.txt", 'negative')
