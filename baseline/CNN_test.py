@@ -2,24 +2,26 @@ from __future__ import print_function
 import numpy as np
 np.random.seed(1337)
 
+
 from keras.preprocessing import sequence
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation
 from keras.layers import Embedding
 from keras.layers import Convolution1D, GlobalMaxPooling1D
 from helpers import load_data_and_labels
+
 from keras.preprocessing.text import Tokenizer
 
 # set parameters:
 # We can play with those parameters to get better results
-max_features = 5000
-maxlen = 400
-batch_size = 1000
-embedding_dims = 100
-nb_filter = 250
+max_features = 200
+maxlen = 200
+batch_size = 5000
+embedding_dims = 900
+nb_filter = 350
 filter_length = 3
-hidden_dims = 50
-nb_epoch = 2
+hidden_dims = 2
+nb_epoch = 1
 
 
 print('Loading data...')
@@ -54,11 +56,31 @@ model.add(Embedding(max_features,
 
 # we add a Convolution1D, which will learn nb_filter
 # word group filters of size filter_length:
-model.add(Convolution1D(nb_filter=nb_filter,
+model.add(Convolution1D(nb_filter=128,
                         filter_length=filter_length,
                         border_mode='valid',
                         activation='relu',
                         subsample_length=2))
+# we use max pooling:
+
+model.add(Convolution1D(nb_filter=128,
+                        filter_length=filter_length,
+                        border_mode='valid',
+                        activation='relu',
+                        subsample_length=2))
+
+model.add(Convolution1D(nb_filter=128,
+                        filter_length=filter_length,
+                        border_mode='valid',
+                        activation='relu',
+                        subsample_length=2))
+
+model.add(Convolution1D(nb_filter=64,
+                        filter_length=filter_length,
+                        border_mode='valid',
+                        activation='relu',
+                        subsample_length=2))
+
 # we use max pooling:
 model.add(GlobalMaxPooling1D())
 
@@ -79,4 +101,4 @@ model.fit(X_train, labels,
           batch_size=batch_size,
           nb_epoch=nb_epoch)
 
-model.save('model_CNN_test.h5')
+model.save('model_CNN_04.h5')

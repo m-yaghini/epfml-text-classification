@@ -13,7 +13,7 @@ from keras.models import load_model
 max_features = 3000
 maxlen = 1000
 batch_size = 200
-embedding_dims = 300
+embedding_dims = 100
 nb_filter = 250
 filter_length = 3
 hidden_dims = 50
@@ -30,19 +30,28 @@ X_test = sequence.pad_sequences(sequences_test, maxlen=maxlen)
 
 
 print('Loading the model...')
-model = load_model('model_base.h5')
+model = load_model('model_ahmad.h5')
 
 # Predictions for the test data
 probas = model.predict(X_test, batch_size=32)
 
+print(probas)
+
 # Replacing the predictions with -1 or +1
 predictions = []
+threshold = 0.6
 index = 1
 for tweet in probas:
-    if tweet[0] >= tweet[1]:
+    if tweet[0] >= tweet[1] and tweet[0] > threshold:
         predictions.append([index, -1])
-    else:
+    elif tweet[1] >= tweet[0] and tweet[1] > threshold:
         predictions.append([index, 1])
+    else:
+        rand_pred = np.random.random()
+        if rand_pred >= 0.5:
+            predictions.append([index, -1])
+        else:
+            predictions.append([index, 1])
     index += 1
 print(predictions)
 

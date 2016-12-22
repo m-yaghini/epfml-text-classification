@@ -29,7 +29,7 @@ nb_epoch = 2
 max_features = 3000
 maxlen = 1000
 batch_size = 200
-embedding_dims = 100
+embedding_dims = 500
 nb_filter = 250
 filter_length = 3
 hidden_dims = 50
@@ -59,7 +59,7 @@ nb_epoch = 1
 print('Indexing word vectors.')
 
 embeddings_index = {}
-f = open('data/model_clean.vec')
+f = open('data/embeddings_model.vec')
 for line in f:
     values = line.split()
     word = values[0]
@@ -120,8 +120,7 @@ model.add(Embedding(nb_words + 1,
 # A CONVOLUTIONAL LAYER
 
 # '''
-model.add(Dropout(0.25))
-model.add(Convolution1D(nb_filter=nb_filter,
+model.add(Convolution1D(nb_filter=100,
                         filter_length=filter_length,
                         border_mode='valid',
                         activation='relu',

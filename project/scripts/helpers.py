@@ -51,7 +51,7 @@ def cooc_matrix(run_path, method):
                         data.append(1)
                         row.append(t)
                         col.append(t2)
-    cooc = coo_matrix((data, (row, col)))
+    cooc = cooc_matrix((data, (row, col)))
     cooc.sum_duplicates()
     with open(cooc_file, 'wb') as f:
         pickle.dump(cooc, f, pickle.HIGHEST_PROTOCOL)
@@ -81,7 +81,7 @@ def glove_embeddings(path, nmax=100, embedding_dim=20, eta=0.001, alpha=0.75, ep
     np.save(path + 'embeddings', xs)
 
 
-def load_data_and_labels(positive_data_file, negative_data_file, test_data_file):
+def load_data_and_labels(positive_data_file, negative_data_file):
     """
     Loads data from files, splits the data into words and generates labels.
     Returns split sentences and labels for the training sets and split sentences for the testing set
@@ -91,17 +91,17 @@ def load_data_and_labels(positive_data_file, negative_data_file, test_data_file)
     positive_examples = [s.strip() for s in positive_examples]
     negative_examples = list(open(negative_data_file, "r").readlines())
     negative_examples = [s.strip() for s in negative_examples]
-    test_examples = list(open(test_data_file, "r").readlines())
-    test_examples = [s.strip() for s in test_examples]
+    #test_examples = list(open(test_data_file, "r").readlines())
+    #test_examples = [s.strip() for s in test_examples]
     # Split by words
     train = positive_examples + negative_examples
     train = [clean_str(sent) for sent in train]
-    test = [clean_str(sent) for sent in test_examples]
+    #test = [clean_str(sent) for sent in test_examples]
     # Generate labels
     positive_labels = [1 for _ in positive_examples]
     negative_labels = [-1 for _ in negative_examples]
     labels = np.concatenate([positive_labels, negative_labels], 0)
-    return [train, labels, test]
+    return [train, labels]
 
 
 def vectorize_set(tweet_set, vocab_dict, W):
