@@ -9,6 +9,6 @@ In our case, we used it on the top of TensorFlow. We can simply install Keras by
 You can execute the run.py file which produces the predicition based on the saved model "model.h5". This model is the result of the other file train_model.py which execute the following steps :
 First, we clean the tweets using our cleaning functions and we load the pretrained embeddings produced with Fasttext. Then, the data are passed to the model which is a Convolutional Neural Network.
 
-TODO : - More detailed instructions
-       - Explain the role of each file in the folder
-       - Briefly explain the final model maybe ??? 
+The data files are stored in the data folder
+
+All our pythons files provide some feed-back by printing messages to keep track of the execution's stages of the script.
