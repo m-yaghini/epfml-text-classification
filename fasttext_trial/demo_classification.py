@@ -9,7 +9,7 @@ import numpy as np
 from sklearn.ensemble import RandomForestClassifier as RFC
 
 DATA_FOLDER = 'data/'
-FROM_SCRATCH = False
+FROM_SCRATCH = True
 ALREADY_TRAINED = True
 
 K = 100  # number of vector features
@@ -83,8 +83,8 @@ else:
         x_train, y_train = pickle.load(train_data_picklefile)
 
 # Classification
-rfc = RFC()
-print(extract_features('I am happy', K))
+# rfc = RFC()
+# print(extract_features('I am happy', K))
 # print(vector_dict['good'])
 # print(x_train.shape, y_train.shape)
 # rfc.fit(np.transpose(x_train), y_train.flatten())

@@ -35,7 +35,7 @@ filter_length = 3
 hidden_dims = 50
 nb_epoch = 2
 
-'''
+# '''
 max_features = 20000
 maxlen = 1000
 embedding_size = 100
@@ -50,8 +50,8 @@ lstm_output_size = 70
 
 # Training
 batch_size = 300
-nb_epoch = 2
-'''
+nb_epoch = 1
+# '''
 
 # first, build index mapping words in the embeddings set
 # to their embedding vector
@@ -59,7 +59,7 @@ nb_epoch = 2
 print('Indexing word vectors.')
 
 embeddings_index = {}
-f = open('data/glove.6B.100d.txt')
+f = open('data/model_clean.vec')
 for line in f:
     values = line.split()
     word = values[0]
@@ -70,7 +70,7 @@ f.close()
 print('Found %s word vectors.' % len(embeddings_index))
 
 print('Loading data...')
-x_train, labels, x_test = load_data_and_labels('data/train_pos.txt', 'data/train_neg.txt', 'data/test_data.txt')
+x_train, labels, x_test = load_data_and_labels('data/train_pos_full.txt', 'data/train_neg_full.txt', 'data/test_data.txt')
 
 # Tokenize the words and creating sequences and padding sequences
 tokenizer = Tokenizer(nb_words=maxlen)
@@ -115,9 +115,11 @@ model.add(Embedding(nb_words + 1,
                     embedding_dims,
                     weights=[embedding_matrix],
                     input_length=maxlen,
-                    dropout=0.2))
+                    dropout=0.2))  # NO DROPOUT HERE
 
-'''
+# A CONVOLUTIONAL LAYER
+
+# '''
 model.add(Dropout(0.25))
 model.add(Convolution1D(nb_filter=nb_filter,
                         filter_length=filter_length,
@@ -128,9 +130,9 @@ model.add(MaxPooling1D(pool_length=pool_length))
 model.add(LSTM(lstm_output_size))
 model.add(Dense(2))
 model.add(Activation('sigmoid'))
-'''
+# '''
 
-'''
+# '''
 # we add a Convolution1D, which will learn nb_filter
 # word group filters of size filter_length:
 model.add(Convolution1D(nb_filter=nb_filter,
@@ -151,14 +153,14 @@ model.add(Activation('relu'))
 # We project onto a single unit output layer, and squash it with a sigmoid:
 model.add(Dense(2))
 model.add(Activation('sigmoid'))
-'''
+# '''
 
-model.add(GlobalMaxPooling1D())
+model.add(GlobalMaxPooling1D()) # MAX POOLING
 model.add(Dense(100, init='normal', activation='relu'))
 model.add(Dropout(0.2))
-model.add(Dense(50, init='normal', activation='relu'))
+# model.add(Dense(50, init='normal', activation='relu')) # NO DENSE HERE
 #x = Dense(1, init='normal', activation='sigmoid')(x)
-model.add(Dense(2, activation='sigmoid'))
+model.add(Dense(2, activation='sigmoid')) # 2 CLASSES => 2 outputs
 
 model.compile(loss='binary_crossentropy',
               optimizer='adam',
@@ -167,27 +169,28 @@ model.compile(loss='binary_crossentropy',
 
 
 history = model.fit(X_train, labels, batch_size=batch_size, nb_epoch=nb_epoch)
-# list all data in history
-print(history.history.keys())
-# summarize history for accuracy
-plt.plot(history.history['acc'])
-plt.plot(history.history['val_acc'])
-plt.title('model accuracy')
-plt.ylabel('accuracy')
-plt.xlabel('epoch')
-plt.legend(['train', 'test'], loc='upper left')
-plt.show()
-plt.savefig('accuracy.png')
-# summarize history for loss
-plt.plot(history.history['loss'])
-plt.plot(history.history['val_loss'])
-plt.title('model loss')
-plt.ylabel('loss')
-plt.xlabel('epoch')
-plt.legend(['train', 'test'], loc='upper left')
-plt.show()
-plt.savefig('loss.png')
-
-plt.savefig()
-
 model.save('model_base.h5')
+
+# # list all data in history
+# print(history.history.keys())
+# # summarize history for accuracy
+# plt.plot(history.history['acc'])
+# plt.plot(history.history['val_acc'])
+# plt.title('model accuracy')
+# plt.ylabel('accuracy')
+# plt.xlabel('epoch')
+# plt.legend(['train', 'test'], loc='upper left')
+# plt.show()
+# plt.savefig('accuracy.png')
+# # summarize history for loss
+# plt.plot(history.history['loss'])
+# plt.plot(history.history['val_loss'])
+# plt.title('model loss')
+# plt.ylabel('loss')
+# plt.xlabel('epoch')
+# plt.legend(['train', 'test'], loc='upper left')
+# plt.show()
+# plt.savefig('loss.png')
+#
+# plt.savefig()
+

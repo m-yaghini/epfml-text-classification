@@ -10,13 +10,13 @@ from keras.preprocessing.text import Tokenizer
 from keras.models import load_model
 
 # set parameters:
-max_features = 5000
-maxlen = 400
-batch_size = 1000
-embedding_dims = 100
+max_features = 3000
+maxlen = 1000
+batch_size = 200
+embedding_dims = 300
 nb_filter = 250
 filter_length = 3
-hidden_dims = 250
+hidden_dims = 50
 nb_epoch = 2
 
 print('Loading data...')
@@ -30,7 +30,7 @@ X_test = sequence.pad_sequences(sequences_test, maxlen=maxlen)
 
 
 print('Loading the model...')
-model = load_model('model_CNN_test.h5')
+model = load_model('model_base.h5')
 
 # Predictions for the test data
 probas = model.predict(X_test, batch_size=32)
